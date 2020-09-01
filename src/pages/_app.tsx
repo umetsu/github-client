@@ -1,6 +1,10 @@
 import { AppProps } from 'next/app'
 import React from 'react'
 import '../styles/global.css'
+import { ApolloProvider } from '@apollo/client'
+import { theme } from '../theme'
+import { ThemeProvider } from '@material-ui/styles'
+import { client } from '../graphql/client'
 
 export default function App({ Component, pageProps }: AppProps): JSX.Element {
   React.useEffect(() => {
@@ -11,5 +15,11 @@ export default function App({ Component, pageProps }: AppProps): JSX.Element {
     }
   }, [])
 
-  return <Component {...pageProps} />
+  return (
+    <ApolloProvider client={client}>
+      <ThemeProvider theme={theme}>
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </ApolloProvider>
+  )
 }

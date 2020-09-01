@@ -1,14 +1,20 @@
 import React from 'react'
-import { ThemeProvider } from '@material-ui/styles'
 import { Container } from '@material-ui/core'
-import { theme } from '../theme'
+import { useSearchRepositoriesQuery } from '../graphql/generated/types'
 
 export default function TopPage(): JSX.Element {
+  const { loading, error, data } = useSearchRepositoriesQuery({
+    variables: {
+      userName: 'umetsu',
+    },
+  })
+
+  if (loading) return <p>Loading...</p>
+  if (error) return <p>Error :(</p>
+
   return (
-    <ThemeProvider theme={theme}>
-      <Container maxWidth={'md'} style={{ padding: '16px' }}>
-        <>Hello Next.js</>
-      </Container>
-    </ThemeProvider>
+    <Container maxWidth={'md'} style={{ padding: '16px' }}>
+      <>{data?.viewer.login}</>
+    </Container>
   )
 }

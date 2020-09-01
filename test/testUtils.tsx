@@ -5,16 +5,27 @@ import {
 import React, { ComponentType } from 'react'
 import ThemeProvider from '@material-ui/styles/ThemeProvider'
 import { theme } from '../src/theme'
+import { MockedProvider } from '@apollo/client/testing'
+import { MockedResponse } from '@apollo/client/utilities/testing/mocking/mockLink'
 
-function Providers({ children }: { children: React.ReactElement }) {
-  return <ThemeProvider theme={theme}>{children}</ThemeProvider>
+type RenderOptions = RtlRenderOptions & {
+  mocks?: ReadonlyArray<MockedResponse>
 }
 
-type RenderOptions = RtlRenderOptions
+function customRender(
+  ui: React.ReactElement,
+  { mocks, ...options }: RenderOptions = {}
+) {
+  function Wrapper({ children }: { children: React.ReactElement }) {
+    return (
+      <MockedProvider mocks={mocks} addTypename={false}>
+        <ThemeProvider theme={theme}>{children}</ThemeProvider>
+      </MockedProvider>
+    )
+  }
 
-function customRender(ui: React.ReactElement, options: RenderOptions = {}) {
   return {
-    ...rtlRender(ui, { wrapper: Providers as ComponentType, ...options }),
+    ...rtlRender(ui, { wrapper: Wrapper as ComponentType, ...options }),
   }
 }
 

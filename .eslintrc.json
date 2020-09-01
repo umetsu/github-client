@@ -38,6 +38,7 @@
       {
         "allow": ["warn", "error"]
       }
-    ]
+    ],
+    "no-irregular-whitespace": "off"
   }
 }
