@@ -1,0 +1,57 @@
+{
+  "name": "nextjs-template",
+  "author": "umetsu",
+  "license": "MIT",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "type-check": "tsc --pretty --noEmit",
+    "format": "prettier --write **/*.{js,ts,tsx}",
+    "lint": "eslint . --ext ts --ext tsx --ext js",
+    "test": "is-ci \"test:coverage\" \"test:watch\"",
+    "test:coverage": "jest --coverage",
+    "test:watch": "jest --watch",
+    "test-all": "yarn lint && yarn type-check && yarn test"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "pre-push": "yarn run type-check"
+    }
+  },
+  "lint-staged": {
+    "*.@(ts|tsx)": [
+      "yarn lint",
+      "yarn format"
+    ]
+  },
+  "dependencies": {
+    "@babel/core": "7.11.5",
+    "@material-ui/core": "4.11.0",
+    "next": "9.5.2",
+    "react": "16.13.1",
+    "react-dom": "16.13.1"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "5.11.4",
+    "@testing-library/react": "10.4.9",
+    "@types/jest": "26.0.12",
+    "@types/node": "13.13.15",
+    "@types/react": "16.9.49",
+    "@typescript-eslint/eslint-plugin": "4.0.1",
+    "@typescript-eslint/parser": "4.0.1",
+    "babel-jest": "26.3.0",
+    "eslint": "7.8.0",
+    "eslint-config-prettier": "6.11.0",
+    "eslint-plugin-react": "7.20.6",
+    "husky": "4.2.5",
+    "is-ci-cli": "2.1.2",
+    "jest": "26.4.2",
+    "jest-watch-typeahead": "0.6.0",
+    "lint-staged": "10.2.13",
+    "prettier": "2.1.1",
+    "typescript": "4.0.2"
+  }
+}
