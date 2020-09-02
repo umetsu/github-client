@@ -19279,7 +19279,6 @@ export type SearchRepositoriesQueryVariables = Exact<{
 }>
 
 export type SearchRepositoriesQuery = { __typename?: 'Query' } & {
-  viewer: { __typename?: 'User' } & Pick<User, 'login'>
   repositoryOwner?: Maybe<
     | ({ __typename?: 'Organization' } & {
         repositories: { __typename?: 'RepositoryConnection' } & {
@@ -19340,9 +19339,6 @@ export type SearchRepositoriesQuery = { __typename?: 'Query' } & {
 
 export const SearchRepositoriesDocument = gql`
   query SearchRepositories($userName: String!) {
-    viewer {
-      login
-    }
     repositoryOwner(login: $userName) {
       repositories(first: 30, orderBy: { field: UPDATED_AT, direction: DESC }) {
         nodes {

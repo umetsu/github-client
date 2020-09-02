@@ -1,7 +1,4 @@
 query SearchRepositories($userName: String!) {
-    viewer {
-        login
-    }
     repositoryOwner(login: $userName) {
         repositories(first: 30, orderBy: { field: UPDATED_AT, direction: DESC }) {
             nodes {
