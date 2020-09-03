@@ -70,4 +70,4 @@ export function データ受け渡し君(): JSX.Element {
 
 ## 2020/09/03 追記2
 コンポーネントやステートを局所的にするという点では、やはりRecoilのほうが筋が良さそう。  
-(Recoilをちゃんと触ってないのでまだわからない)
+[Recoilを入れてみた](https://github.com/umetsu/github-client/tree/recoil)。
