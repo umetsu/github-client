@@ -2,15 +2,16 @@ import React from 'react'
 import { Container } from '@material-ui/core'
 import { RepositoryList } from '../ui/repositories/RepositoryList'
 import { Header } from '../ui/repositories/Header'
-import { RepositoriesProvider } from '../ui/repositories/context'
+import { useSearchState } from '../ui/repositories/useSearchState'
 
 export default function TopPage(): JSX.Element {
+  const [{ userName }] = useSearchState()
   return (
-    <RepositoriesProvider>
+    <div>
       <Header />
       <Container maxWidth={'md'} style={{ padding: '16px' }}>
-        <RepositoryList />
+        <RepositoryList userName={userName} />
       </Container>
-    </RepositoriesProvider>
+    </div>
   )
 }

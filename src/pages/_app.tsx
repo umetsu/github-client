@@ -5,6 +5,7 @@ import { ApolloProvider } from '@apollo/client'
 import { theme } from '../theme'
 import { ThemeProvider } from '@material-ui/styles'
 import { client } from '../graphql/client'
+import { RecoilRoot } from 'recoil'
 
 export default function App({ Component, pageProps }: AppProps): JSX.Element {
   React.useEffect(() => {
@@ -17,9 +18,11 @@ export default function App({ Component, pageProps }: AppProps): JSX.Element {
 
   return (
     <ApolloProvider client={client}>
-      <ThemeProvider theme={theme}>
-        <Component {...pageProps} />
-      </ThemeProvider>
+      <RecoilRoot>
+        <ThemeProvider theme={theme}>
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </RecoilRoot>
     </ApolloProvider>
   )
 }
