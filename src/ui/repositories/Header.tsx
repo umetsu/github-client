@@ -8,7 +8,7 @@ import {
   Toolbar,
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
-import { useSearchState } from './search-context'
+import { useRepositoriesState } from './context'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export function Header(): JSX.Element {
   const classes = useStyles()
-  const [state, dispatch] = useSearchState()
+  const [{ search }, dispatch] = useRepositoriesState()
 
   function handleChange(
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
@@ -51,7 +51,7 @@ export function Header(): JSX.Element {
               input: classes.inputInput,
             }}
             inputProps={{ 'aria-label': 'search' }}
-            value={state.userName}
+            value={search.userName}
             onChange={handleChange}
           />
         </div>

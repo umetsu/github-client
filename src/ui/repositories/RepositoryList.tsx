@@ -1,13 +1,12 @@
 import React from 'react'
 import { useSearchRepositoriesQuery } from '../../graphql/generated/types'
-import { useSearchState } from '../search-form/search-context'
+import { useRepositoriesState } from './context'
 
 export function RepositoryList(): JSX.Element {
-  // ここでsearch-contextに依存するべきか悩む
-  const [{ userName }] = useSearchState()
+  const [{ search }] = useRepositoriesState()
   const { loading, error, data } = useSearchRepositoriesQuery({
     variables: {
-      userName: userName,
+      userName: search.userName,
     },
   })
 

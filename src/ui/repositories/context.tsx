@@ -1,7 +1,7 @@
 import React from 'react'
 
-type State = { userName: string }
-const initialState: State = { userName: '' }
+type State = { search: { userName: string } }
+const initialState: State = { search: { userName: '' } }
 
 type Action = { type: 'ChangeUserName'; userName: string }
 type Dispatch = (action: Action) => void
@@ -9,7 +9,7 @@ type Dispatch = (action: Action) => void
 const StateContext = React.createContext<State | undefined>(undefined)
 const DispatchContext = React.createContext<Dispatch | undefined>(undefined)
 
-export function SearchProvider({
+export function RepositoriesProvider({
   children,
 }: {
   children: React.ReactNode
@@ -27,7 +27,7 @@ export function SearchProvider({
 function reducer(state: State, action: Action): State {
   switch (action.type) {
     case 'ChangeUserName': {
-      return { userName: action.userName }
+      return { search: { userName: action.userName } }
     }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`)
@@ -35,11 +35,13 @@ function reducer(state: State, action: Action): State {
   }
 }
 
-export function useSearchState(): [State, Dispatch] {
+export function useRepositoriesState(): [State, Dispatch] {
   const state = React.useContext(StateContext)
   const dispatch = React.useContext(DispatchContext)
   if (state === undefined || dispatch == undefined) {
-    throw new Error('useSearchState must be used within a SearchProvider')
+    throw new Error(
+      'useRepositoriesState must be used within a RepositoriesProvider'
+    )
   }
 
   return [state, dispatch]
