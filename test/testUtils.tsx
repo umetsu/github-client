@@ -7,6 +7,7 @@ import ThemeProvider from '@material-ui/styles/ThemeProvider'
 import { theme } from '../src/theme'
 import { MockedProvider } from '@apollo/client/testing'
 import { MockedResponse } from '@apollo/client/utilities/testing/mocking/mockLink'
+import { RecoilRoot } from 'recoil'
 
 type RenderOptions = RtlRenderOptions & {
   mocks?: ReadonlyArray<MockedResponse>
@@ -19,7 +20,9 @@ function customRender(
   function Wrapper({ children }: { children: React.ReactElement }) {
     return (
       <MockedProvider mocks={mocks} addTypename={false}>
-        <ThemeProvider theme={theme}>{children}</ThemeProvider>
+        <RecoilRoot>
+          <ThemeProvider theme={theme}>{children}</ThemeProvider>
+        </RecoilRoot>
       </MockedProvider>
     )
   }
