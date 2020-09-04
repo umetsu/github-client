@@ -71,3 +71,24 @@ export function データ受け渡し君(): JSX.Element {
 ## 2020/09/03 追記2
 コンポーネントやステートを局所的にするという点では、やはりRecoilのほうが筋が良さそう。  
 [Recoilを入れてみた](https://github.com/umetsu/github-client/tree/recoil)。
+
+## 2020/09/04 追記
+コンポーネントをまたいでページ全体で扱いたい情報は、ページ用のContextを作るという方針にした。  
+
+```typescript jsx
+export default function RepositoriesPage(): JSX.Element {
+  return (
+    <div>
+      {/* 確定された検索項目などを保持 */}
+      <RepositoriesProvider>
+        {/* ユーザーが入力している途中の情報などはこのコンポーネント以下に閉じる */}
+        <SearchProvider>
+          <Header />
+        </SearchProvider>
+        {/* RepositoriesProviderから確定された検索項目を参照 */}
+        <RepositoryList />
+      </RepositoriesProvider>
+    </div>
+  )
+}
+```
