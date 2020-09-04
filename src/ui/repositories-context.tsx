@@ -1,9 +1,15 @@
+/**
+ * ページ全体で共有するStateを管理する
+ */
 import React from 'react'
 
-type State = { search: { userName: string } }
+type State = {
+  // 入力が確定した検索情報を保持
+  search: { userName: string }
+}
 const initialState: State = { search: { userName: '' } }
 
-type Action = { type: 'ChangeUserName'; userName: string }
+type Action = { type: 'DecideUserName'; userName: string }
 type Dispatch = (action: Action) => void
 
 const StateContext = React.createContext<State | undefined>(undefined)
@@ -26,8 +32,8 @@ export function RepositoriesProvider({
 
 function reducer(state: State, action: Action): State {
   switch (action.type) {
-    case 'ChangeUserName': {
-      return { search: { userName: action.userName } }
+    case 'DecideUserName': {
+      return { ...state, search: { userName: action.userName } }
     }
     default: {
       throw new Error(`Unhandled action type: ${action.type}`)
@@ -35,7 +41,7 @@ function reducer(state: State, action: Action): State {
   }
 }
 
-export function useRepositoriesState(): [State, Dispatch] {
+export function useRepositoriesState(): { state: State; dispatch: Dispatch } {
   const state = React.useContext(StateContext)
   const dispatch = React.useContext(DispatchContext)
   if (state === undefined || dispatch == undefined) {
@@ -44,5 +50,5 @@ export function useRepositoriesState(): [State, Dispatch] {
     )
   }
 
-  return [state, dispatch]
+  return { state, dispatch }
 }

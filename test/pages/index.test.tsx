@@ -52,18 +52,11 @@ function mock(userName: string, repositories: ReadonlyArray<Repository> = []) {
 
 test('トップページのレンダリング', async () => {
   const { getByLabelText, getByText, findByText } = render(<TopPage />, {
-    mocks: [
-      mock(''),
-      mock('u'),
-      mock('um'),
-      mock('ume'),
-      mock('umet'),
-      mock('umets'),
-      mock('umetsu', repositories),
-    ],
+    mocks: [mock(''), mock('umetsu', repositories)],
   })
 
-  await user.type(getByLabelText(/search/), 'umetsu')
+  await user.type(getByLabelText(/user-name/), 'umetsu')
+  user.click(getByText(/search/i))
 
   expect(getByText(/loading/i)).toBeInTheDocument()
   expect(await findByText(/github-client/i)).toBeInTheDocument()

@@ -1,6 +1,7 @@
 import React from 'react'
 import {
   AppBar,
+  Button,
   createStyles,
   fade,
   InputBase,
@@ -8,21 +9,22 @@ import {
   Toolbar,
 } from '@material-ui/core'
 import { makeStyles } from '@material-ui/styles'
-import { useRepositoriesState } from './context'
+import { useRepositoriesState } from '../repositories-context'
+import { useSearchState } from './search-context'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     search: {
+      dispalay: 'flex',
       borderRadius: theme.shape.borderRadius,
       backgroundColor: fade(theme.palette.common.white, 0.15),
       '&:hover': {
         backgroundColor: fade(theme.palette.common.white, 0.25),
       },
-      width: '100%',
     },
     inputRoot: {
       color: 'inherit',
-      width: '100%',
+      flex: 1,
     },
     inputInput: {
       padding: theme.spacing(1, 1, 1, 1),
@@ -32,12 +34,21 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export function Header(): JSX.Element {
   const classes = useStyles()
-  const [{ search }, dispatch] = useRepositoriesState()
+  const { dispatch: pageDispatch } = useRepositoriesState()
+  const {
+    state: { userName },
+    dispatch,
+  } = useSearchState()
 
   function handleChange(
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) {
-    dispatch({ type: 'ChangeUserName', userName: e.target.value })
+    const userName = e.target.value
+    dispatch({ type: 'ChangeUserName', userName })
+  }
+
+  function handleClick() {
+    pageDispatch({ type: 'DecideUserName', userName })
   }
 
   return (
@@ -50,10 +61,13 @@ export function Header(): JSX.Element {
               root: classes.inputRoot,
               input: classes.inputInput,
             }}
-            inputProps={{ 'aria-label': 'search' }}
-            value={search.userName}
+            inputProps={{ 'aria-label': 'user-name' }}
+            value={userName}
             onChange={handleChange}
           />
+          <Button variant={'contained'} onClick={handleClick}>
+            Search
+          </Button>
         </div>
       </Toolbar>
     </AppBar>

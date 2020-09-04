@@ -1,9 +1,13 @@
 import React from 'react'
 import { useSearchRepositoriesQuery } from '../../graphql/generated/types'
-import { useRepositoriesState } from './context'
+import { useRepositoriesState } from '../repositories-context'
 
 export function RepositoryList(): JSX.Element {
-  const [{ search }] = useRepositoriesState()
+  // 確定した入力情報をページ全体のContextから取得する
+  const {
+    state: { search },
+  } = useRepositoriesState()
+
   const { loading, error, data } = useSearchRepositoriesQuery({
     variables: {
       userName: search.userName,
